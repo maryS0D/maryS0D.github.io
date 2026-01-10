@@ -68,29 +68,18 @@
       background: #6fa8ff;
       border: none;
       border-radius: 30px;
-      padding: 14px 30px;
+      padding: 14px 26px;
       font-size: 16px;
       color: white;
       cursor: pointer;
-      margin-top: 10px;
+      margin: 8px;
     }
 
-    .game {
+    .choice {
       display: flex;
-      gap: 15px;
       justify-content: center;
-      margin-top: 20px;
+      gap: 15px;
       flex-wrap: wrap;
-    }
-
-    .game img {
-      width: 80px;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    .game img:hover {
-      transform: scale(1.1);
     }
 
     .code-box {
@@ -99,7 +88,6 @@
       align-items: center;
       gap: 6px;
       margin-top: 15px;
-      font-size: 20px;
     }
 
     .code-prefix {
@@ -110,8 +98,8 @@
     }
 
     .code-input {
-      width: 160px;
-      font-size: 20px;
+      width: 180px;
+      font-size: 18px;
       padding: 10px;
       text-align: center;
       border-radius: 12px;
@@ -144,21 +132,6 @@
 
 <script>
 let step = 0;
-const nicknameAnswer = "pumpkin";
-
-const sequence = ["bee","bee","bear","sun","flower","bear","flower","bear","bear"];
-let userInput = [];
-
-const images = {
-  bee: "assets/bee.png.jpg",
-  bear: "assets/bear.png.jpg",
-  flower: "assets/flower.png.jpg",
-  sun: "assets/sun.png.jpg"
-};
-
-function shuffle(array) {
-  return array.sort(() => Math.random() - 0.5);
-}
 
 function nextStep() {
   const scene = document.getElementById("scene");
@@ -172,100 +145,54 @@ function nextStep() {
   }
 
   else if (step === 1) {
-    userInput = [];
-    const shuffled = shuffle(["bee","bear","flower","sun"]);
     scene.innerHTML = `
-      <div class="dialog">
-        🧩 لغز صغير:<br>
-        🐝 🐝 🐻 ☀️ 🌸 🐻 🌸 🐻 🐻
-      </div>
-      <div class="game" id="game"></div>
-    `;
-    const gameDiv = document.getElementById("game");
-    shuffled.forEach(type => {
-      const img = document.createElement("img");
-      img.src = images[type];
-      img.onclick = () => checkOrder(type);
-      gameDiv.appendChild(img);
-    });
-    step++;
-    return;
-  }
-
-  else if (step === 2) {
-    scene.innerHTML = `
-      <img src="assets/betterfly.png.jpg" class="main-img">
-      <div class="dialog">كل شيء سيكون بخير</div>
+      <div class="dialog">كل شيء سيكون بخير 🌸</div>
       <button onclick="nextStep()">التالي</button>
-    `;
-  }
-
-  else if (step === 3) {
-    scene.innerHTML = `
-      <img src="assets/bee.png.jpg" class="main-img">
-      <div class="dialog">أريدك دائمًا أن تتذوق عسلًا 🍯</div>
-      <button onclick="nextStep()">التالي</button>
-    `;
-  }
-
-  else if (step === 4) {
-    scene.innerHTML = `
-      <img src="assets/sun.png.jpg" class="main-img">
-      <div class="dialog">سأحرص على جعلك دافئًا بأشعتي ☀️</div>
-      <button onclick="nextStep()">التالي</button>
-    `;
-  }
-
-  else if (step === 5) {
-    scene.innerHTML = `
-      <img src="assets/bear.png.jpg" class="main-img">
-      <div class="dialog">أنا أستمتع بهذه الجولة معك 🤍</div>
-      <button onclick="nextStep()">تابع</button>
     `;
   }
 
   /* 🔐 الرمز السري */
-  else if (step === 6) {
+  else if (step === 2) {
     scene.innerHTML = `
       <div class="dialog">أكمل الرمز السري 🔐</div>
-
       <div class="code-box">
         <div class="code-prefix">20</div>
         <input class="code-input" maxlength="6"
           placeholder="------"
           oninput="checkCode(this.value)">
       </div>
-
       <div class="hint">
-        إنه اليوم الذي التقيتك فيه عند منزل خالتي
+        إنه التاريخ الذي التقيتك فيه عند منزل خالتي
       </div>
     `;
   }
 
-  /* 🎃 سؤال اللقب */
-  else if (step === 7) {
+  /* 🎃 اللقب */
+  else if (step === 3) {
     scene.innerHTML = `
       <div class="dialog">
         هل تتذكر اللقب الذي أطلقته علي؟ 🎃
       </div>
       <input class="code-input"
-        style="width:200px"
         placeholder="اكتب اللقب هنا..."
         oninput="checkNickname(this.value)">
     `;
   }
 
-  step++;
-}
-
-function checkOrder(type) {
-  userInput.push(type);
-  if (userInput[userInput.length - 1] !== sequence[userInput.length - 1]) {
-    alert("حاول مرة أخرى 🌸");
-    userInput = [];
-    return;
+  /* 🐦 زقزوق و مرزوقة */
+  else if (step === 4) {
+    scene.innerHTML = `
+      <div class="dialog">
+        هل تتذكر زقزوق و مرزوقة؟ 🐦✨
+      </div>
+      <div class="choice">
+        <button onclick="rememberedBirds(true)">نعم</button>
+        <button onclick="rememberedBirds(false)">لا</button>
+      </div>
+    `;
   }
-  if (userInput.length === sequence.length) nextStep();
+
+  step++;
 }
 
 function checkCode(value) {
@@ -275,9 +202,45 @@ function checkCode(value) {
 }
 
 function checkNickname(value) {
-  if (value.trim().toLowerCase() === nicknameAnswer) {
+  if (value.trim().toLowerCase() === "pumpkin") {
     nextStep();
   }
+}
+
+function rememberedBirds(answer) {
+  const scene = document.getElementById("scene");
+
+  if (answer) {
+    scene.innerHTML = `
+      <div class="dialog">
+        🤍 كنت أعرف أنك تتذكرهم…<br><br>
+        بعض الذكريات لا تختفي أبدًا<br>
+        لأنها سكنت القلب.
+      </div>
+    `;
+  } else {
+    scene.innerHTML = `
+      <div class="dialog">
+        حسنًا… ماذا عن الملك خوصيوص 👑<br>
+        و الأميرة ميرنا 👸<br>
+        من قصر الخوسيبانا؟ 🏰
+      </div>
+      <div class="choice">
+        <button onclick="finalMessage()">نعم بالطبع</button>
+      </div>
+    `;
+  }
+}
+
+function finalMessage() {
+  const scene = document.getElementById("scene");
+  scene.innerHTML = `
+    <div class="dialog">
+      🌟 رائع…<br><br>
+      إذن القصص الجميلة ما زالت هنا،<br>
+      تعيش ما دمنا نبتسم لها 🤍
+    </div>
+  `;
 }
 </script>
 
