@@ -101,10 +101,15 @@
 
 <div class="scene" id="scene">
   <img src="assets/bear.png.jpg" class="main-img">
+
+  <!-- ✨ التعديل هنا فقط -->
   <div class="dialog">
-    مرحبًا صديقي <strong>YoBa</strong> 💛<br><br>
-    هل أنت مستعد أن تمشي معي قليلًا؟
+    مرحبًا صديقي <strong>YoBa</strong> 🧸<br><br>
+    لقد مرّ وقت طويل…<br><br>
+    هل أنت مستعد أن آخذك في نزهة<br>
+    بعيدًا عن قهوتك و مكتبك؟ ☕💼
   </div>
+
   <button onclick="nextStep()">أنا متحمس!</button>
 </div>
 
@@ -129,7 +134,6 @@ function shuffle(array) {
 function nextStep() {
   const scene = document.getElementById("scene");
 
-  // البداية
   if (step === 0) {
     scene.innerHTML = `
       <img src="assets/bear.png.jpg" class="main-img">
@@ -141,7 +145,6 @@ function nextStep() {
     `;
   }
 
-  // 🧩 اللغز
   else if (step === 1) {
     userInput = [];
     const shuffled = shuffle(["bee","bear","flower","sun"]);
@@ -166,18 +169,14 @@ function nextStep() {
     return;
   }
 
-  // 🦋 فراشة
   else if (step === 2) {
     scene.innerHTML = `
       <img src="assets/betterfly.png.jpg" class="main-img">
-      <div class="dialog">
-        كل شيء سيكون بخير
-      </div>
+      <div class="dialog">كل شيء سيكون بخير</div>
       <button onclick="nextStep()">التالي</button>
     `;
   }
 
-  // 🐝 نحلة
   else if (step === 3) {
     scene.innerHTML = `
       <img src="assets/bee.png.jpg" class="main-img">
@@ -189,7 +188,6 @@ function nextStep() {
     `;
   }
 
-  // ☀️ الشمس
   else if (step === 4) {
     scene.innerHTML = `
       <img src="assets/sun.png.jpg" class="main-img">
@@ -201,7 +199,6 @@ function nextStep() {
     `;
   }
 
-  // 🧸 الدب
   else if (step === 5) {
     scene.innerHTML = `
       <img src="assets/bear.png.jpg" class="main-img">
@@ -212,7 +209,6 @@ function nextStep() {
     `;
   }
 
-  // 🎮 لعبة ثانية (بداية)
   else {
     scene.innerHTML = `
       <div class="dialog">
