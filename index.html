@@ -10,39 +10,52 @@
       font-family: "Tahoma", sans-serif;
       direction: rtl;
       background-color: #eaf2ff;
-      background-image:
-        linear-gradient(90deg, rgba(255,255,255,0.6) 50%, transparent 50%),
-        linear-gradient(rgba(255,255,255,0.6) 50%, transparent 50%);
-      background-size: 60px 60px;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
+    }
+
+    /* زهور متحركة في الخلفية */
+    .background {
+      position: fixed;
+      inset: 0;
+      background-image: url("assets/flowers.png.jpg");
+      background-size: 300px;
+      opacity: 0.2;
+      animation: moveBg 40s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes moveBg {
+      from { background-position: 0 0; }
+      to { background-position: 1000px 1000px; }
     }
 
     .scene {
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 24px;
       padding: 40px;
       max-width: 500px;
       text-align: center;
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      animation: fadeIn 2s ease;
+      animation: fadeIn 1.5s ease;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(30px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    .bear {
-      font-size: 80px;
+    .bear-img {
+      width: 160px;
       animation: float 3s ease-in-out infinite;
     }
 
     @keyframes float {
       0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+      50% { transform: translateY(-15px); }
     }
 
     .dialog {
@@ -73,8 +86,10 @@
 
 <body>
 
-  <div class="scene" id="scene1">
-    <div class="bear">🐻</div>
+  <div class="background"></div>
+
+  <div class="scene" id="scene">
+    <img src="assets/bear.png.jpg" class="bear-img" alt="الدب">
 
     <div class="dialog">
       مرحبًا صديقي <strong>YoBa</strong> 💛<br><br>
@@ -85,14 +100,15 @@
     </div>
 
     <button onclick="startAdventure()">
-      أنا متحمس للعب معك!
+      أنا متحمس!
     </button>
   </div>
 
   <script>
     function startAdventure() {
-      document.getElementById("scene1").innerHTML = `
-        <div class="bear">🐻🍯</div>
+      document.getElementById("scene").innerHTML = `
+        <img src="assets/bear.png.jpg" class="bear-img">
+        <img src="assets/happy.png.jpg" style="width:120px; margin-top:10px;">
         <div class="dialog">
           رائع! 😄<br><br>
           أمسك بيدي…<br>
