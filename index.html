@@ -92,6 +92,39 @@
     .game img:hover {
       transform: scale(1.1);
     }
+
+    /* الرمز السري */
+    .code-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      margin-top: 15px;
+      font-size: 20px;
+    }
+
+    .code-prefix {
+      background: #eef3ff;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-weight: bold;
+    }
+
+    .code-input {
+      width: 120px;
+      font-size: 20px;
+      padding: 10px;
+      text-align: center;
+      border-radius: 12px;
+      border: 2px solid #6fa8ff;
+      outline: none;
+    }
+
+    .hint {
+      margin-top: 12px;
+      font-size: 14px;
+      color: #6b7aa6;
+    }
   </style>
 </head>
 
@@ -101,22 +134,18 @@
 
 <div class="scene" id="scene">
   <img src="assets/bear.png.jpg" class="main-img">
-
-  <!-- ✨ التعديل هنا فقط -->
   <div class="dialog">
     مرحبًا صديقي <strong>YoBa</strong> 🧸<br><br>
     لقد مرّ وقت طويل…<br><br>
     هل أنت مستعد أن آخذك في نزهة<br>
     بعيدًا عن قهوتك و مكتبك؟ ☕💼
   </div>
-
   <button onclick="nextStep()">أنا متحمس!</button>
 </div>
 
 <script>
 let step = 0;
 
-// 🧩 ترتيب اللغز
 const sequence = ["bee","bee","bear","sun","flower","bear","flower","bear","bear"];
 let userInput = [];
 
@@ -137,10 +166,7 @@ function nextStep() {
   if (step === 0) {
     scene.innerHTML = `
       <img src="assets/bear.png.jpg" class="main-img">
-      <div class="dialog">
-        أمسك بيدي 🤍<br>
-        الطريق لطيف معنا اليوم
-      </div>
+      <div class="dialog">أمسك بيدي 🤍</div>
       <button onclick="nextStep()">أنا معك</button>
     `;
   }
@@ -148,16 +174,13 @@ function nextStep() {
   else if (step === 1) {
     userInput = [];
     const shuffled = shuffle(["bee","bear","flower","sun"]);
-
     scene.innerHTML = `
       <div class="dialog">
-        🧩 لغز صغير:<br><br>
-        🐝 🐝 🐻 ☀️ 🌸 🐻 🌸 🐻 🐻<br><br>
-        اضغط الصور بنفس الترتيب
+        🧩 لغز صغير:<br>
+        🐝 🐝 🐻 ☀️ 🌸 🐻 🌸 🐻 🐻
       </div>
       <div class="game" id="game"></div>
     `;
-
     const gameDiv = document.getElementById("game");
     shuffled.forEach(type => {
       const img = document.createElement("img");
@@ -180,10 +203,7 @@ function nextStep() {
   else if (step === 3) {
     scene.innerHTML = `
       <img src="assets/bee.png.jpg" class="main-img">
-      <div class="dialog">
-        أريدك دائمًا أن تتذوق عسلًا<br>
-        يا الجميل 🍯
-      </div>
+      <div class="dialog">أريدك دائمًا أن تتذوق عسلًا 🍯</div>
       <button onclick="nextStep()">التالي</button>
     `;
   }
@@ -191,10 +211,7 @@ function nextStep() {
   else if (step === 4) {
     scene.innerHTML = `
       <img src="assets/sun.png.jpg" class="main-img">
-      <div class="dialog">
-        سأحرص على جعلك دائمًا دافئًا<br>
-        بأشعتي ☀️
-      </div>
+      <div class="dialog">سأحرص على جعلك دافئًا بأشعتي ☀️</div>
       <button onclick="nextStep()">التالي</button>
     `;
   }
@@ -202,18 +219,24 @@ function nextStep() {
   else if (step === 5) {
     scene.innerHTML = `
       <img src="assets/bear.png.jpg" class="main-img">
-      <div class="dialog">
-        أنا أستمتع بهذه الجولة معك 🤍
-      </div>
-      <button onclick="nextStep()">لنلعب!</button>
+      <div class="dialog">أنا أستمتع بهذه الجولة معك 🤍</div>
+      <button onclick="nextStep()">تابع</button>
     `;
   }
 
-  else {
+  /* 🔐 الرمز السري */
+  else if (step === 6) {
     scene.innerHTML = `
-      <div class="dialog">
-        🎮 لعبة أخرى قادمة…<br><br>
-        لكن هذا سر صغير الآن ✨
+      <div class="dialog">أكمل الرمز السري 🔐</div>
+
+      <div class="code-box">
+        <div class="code-prefix">20</div>
+        <input class="code-input" maxlength="6" placeholder="------"
+          oninput="checkCode(this.value)">
+      </div>
+
+      <div class="hint">
+        إنه اليوم الذي التقيتك فيه عند منزل خالتي
       </div>
     `;
   }
@@ -223,15 +246,16 @@ function nextStep() {
 
 function checkOrder(type) {
   userInput.push(type);
-  const i = userInput.length - 1;
-
-  if (userInput[i] !== sequence[i]) {
-    alert("حاول مرة أخرى بهدوء 🌸");
+  if (userInput[userInput.length - 1] !== sequence[userInput.length - 1]) {
+    alert("حاول مرة أخرى 🌸");
     userInput = [];
     return;
   }
+  if (userInput.length === sequence.length) nextStep();
+}
 
-  if (userInput.length === sequence.length) {
+function checkCode(value) {
+  if ("20" + value === "20122024") {
     nextStep();
   }
 }
