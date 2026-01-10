@@ -7,7 +7,7 @@
   <style>
     body {
       margin: 0;
-      font-family: "Tahoma", sans-serif;
+      font-family: Tahoma, sans-serif;
       direction: rtl;
       background-color: #eaf2ff;
       min-height: 100vh;
@@ -17,7 +17,6 @@
       overflow: hidden;
     }
 
-    /* زهور متحركة في الخلفية */
     .background {
       position: fixed;
       inset: 0;
@@ -40,22 +39,16 @@
       max-width: 500px;
       text-align: center;
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      animation: fadeIn 1.5s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
     }
 
     .bear-img {
-      width: 160px;
+      width: 150px;
       animation: float 3s ease-in-out infinite;
     }
 
     @keyframes float {
       0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
+      50% { transform: translateY(-12px); }
     }
 
     .dialog {
@@ -73,50 +66,81 @@
       font-size: 16px;
       color: white;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-    }
-
-    button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     }
   </style>
 </head>
 
 <body>
 
-  <div class="background"></div>
+<div class="background"></div>
 
-  <div class="scene" id="scene">
-    <img src="assets/bear.png.jpg" class="bear-img" alt="الدب">
+<div class="scene" id="scene">
+  <img src="assets/bear.png.jpg" class="bear-img">
 
-    <div class="dialog">
-      مرحبًا صديقي <strong>YoBa</strong> 💛<br><br>
-      لم أرك منذ وقت طويل…<br><br>
-      هل أنت مستعد أن تذهب معي في نزهة<br>
-      بعيدًا عن قهوتك ومكتبك ☕💼<br><br>
-      لأريك شيئًا جميلًا؟ 🌿✨
-    </div>
-
-    <button onclick="startAdventure()">
-      أنا متحمس!
-    </button>
+  <div class="dialog">
+    مرحبًا صديقي <strong>YoBa</strong> 💛<br><br>
+    لم أرك منذ وقت طويل…<br><br>
+    هل أنت مستعد أن تذهب معي في نزهة<br>
+    بعيدًا عن قهوتك ومكتبك؟ ☕💼
   </div>
 
-  <script>
-    function startAdventure() {
-      document.getElementById("scene").innerHTML = `
-        <img src="assets/bear.png.jpg" class="bear-img">
-        <img src="assets/happy.png.jpg" style="width:120px; margin-top:10px;">
-        <div class="dialog">
-          رائع! 😄<br><br>
-          أمسك بيدي…<br>
-          المغامرة بدأت الآن 🌲🧺
-        </div>
-      `;
-    }
-  </script>
+  <button onclick="nextStep()">أنا متحمس!</button>
+</div>
+
+<script>
+let step = 0;
+
+function nextStep() {
+  const scene = document.getElementById("scene");
+
+  if (step === 0) {
+    scene.innerHTML = `
+      <img src="assets/bear.png.jpg" class="bear-img">
+      <div class="dialog">
+        أمسك بيدي يا YoBa 🤍<br><br>
+        الغابة تنتظرنا 🌿
+      </div>
+      <button onclick="nextStep()">أنا معك</button>
+    `;
+  }
+
+  else if (step === 1) {
+    scene.innerHTML = `
+      <img src="assets/flower.png.jpg" style="width:120px">
+      <div class="dialog">
+        🌸 زهرة تقول:<br>
+        أحب أن أكون بقربك
+      </div>
+      <button onclick="nextStep()">هذا جميل</button>
+    `;
+  }
+
+  else if (step === 2) {
+    scene.innerHTML = `
+      <img src="assets/butterfly.png.jpg" style="width:120px">
+      <div class="dialog">
+        🦋 فراشة تهمس:<br>
+        كل شيء سيكون بخير
+      </div>
+      <button onclick="nextStep()">أبتسم</button>
+    `;
+  }
+
+  else {
+    scene.innerHTML = `
+      <img src="assets/happy.png.jpg" style="width:150px">
+      <div class="dialog">
+        🎉 مفاجأة 🎉<br><br>
+        YoBa…<br>
+        عيد ميلاد سعيد 💛<br><br>
+        أنت محبوب أكثر مما تظن
+      </div>
+    `;
+  }
+
+  step++;
+}
+</script>
 
 </body>
 </html>
