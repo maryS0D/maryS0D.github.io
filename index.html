@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <title>نزهة مع YoBa 🧸</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Tahoma", sans-serif;
+      direction: rtl;
+      background-color: #eaf2ff;
+      background-image:
+        linear-gradient(90deg, rgba(255,255,255,0.6) 50%, transparent 50%),
+        linear-gradient(rgba(255,255,255,0.6) 50%, transparent 50%);
+      background-size: 60px 60px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .scene {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      animation: fadeIn 2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .bear {
+      font-size: 80px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .dialog {
+      font-size: 18px;
+      line-height: 1.9;
+      margin: 25px 0;
+      color: #3a4a6b;
+    }
+
+    button {
+      background: #6fa8ff;
+      border: none;
+      border-radius: 30px;
+      padding: 14px 30px;
+      font-size: 16px;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="scene" id="scene1">
+    <div class="bear">🐻</div>
+
+    <div class="dialog">
+      مرحبًا صديقي <strong>YoBa</strong> 💛<br><br>
+      لم أرك منذ وقت طويل…<br><br>
+      هل أنت مستعد أن تذهب معي في نزهة<br>
+      بعيدًا عن قهوتك ومكتبك ☕💼<br><br>
+      لأريك شيئًا جميلًا؟ 🌿✨
+    </div>
+
+    <button onclick="startAdventure()">
+      أنا متحمس للعب معك!
+    </button>
+  </div>
+
+  <script>
+    function startAdventure() {
+      document.getElementById("scene1").innerHTML = `
+        <div class="bear">🐻🍯</div>
+        <div class="dialog">
+          رائع! 😄<br><br>
+          أمسك بيدي…<br>
+          المغامرة بدأت الآن 🌲🧺
+        </div>
+      `;
+    }
+  </script>
+
+</body>
+</html>
