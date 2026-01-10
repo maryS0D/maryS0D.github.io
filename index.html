@@ -109,15 +109,16 @@
 <script>
 let step = 0;
 
-// ترتيب اللغز
-const sequence = ["bee","bee","bear","cloud","flower","bear","flower","bear","bear"];
+// 🧩 ترتيب اللغز
+// 🐝 🐝 🐻 ☀️ 🌸 🐻 🌸 🐻 🐻
+const sequence = ["bee","bee","bear","sun","flower","bear","flower","bear","bear"];
 let userInput = [];
 
 const images = {
   bee: "assets/bee.png.jpg",
   bear: "assets/bear.png.jpg",
   flower: "assets/flower.png.jpg",
-  cloud: "assets/cloud.png.jpg"
+  sun: "assets/sun.png.jpg"
 };
 
 function shuffle(array) {
@@ -141,12 +142,12 @@ function nextStep() {
   // 🧩 مرحلة اللغز
   else if (step === 1) {
     userInput = [];
-    const shuffled = shuffle(["bee","bear","flower","cloud"]);
+    const shuffled = shuffle(["bee","bear","flower","sun"]);
 
     scene.innerHTML = `
       <div class="dialog">
         🧩 لغز صغير:<br><br>
-        🐝 🐝 🐻 ☁️ 🌸 🐻 🌸 🐻 🐻<br><br>
+        🐝 🐝 🐻 ☀️ 🌸 🐻 🌸 🐻 🐻<br><br>
         اضغط الصور بنفس الترتيب
       </div>
       <div class="game" id="game"></div>
@@ -163,7 +164,7 @@ function nextStep() {
 
   else if (step === 2) {
     scene.innerHTML = `
-      <img src="assets/butterfly.png.jpg" style="width:120px">
+      <img src="assets/betterfly.png.jpg" style="width:120px">
       <div class="dialog">
         🦋 فراشة تهمس:<br>
         كل شيء سيكون بخير
