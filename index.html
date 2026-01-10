@@ -17,38 +17,19 @@
       overflow: hidden;
     }
 
-    .background {
-      position: fixed;
-      inset: 0;
-      background-image: url("assets/flowers.png.jpg");
-      background-size: 300px;
-      opacity: 0.2;
-      animation: moveBg 40s linear infinite;
-      z-index: -1;
-    }
-
-    @keyframes moveBg {
-      from { background-position: 0 0; }
-      to { background-position: 1000px 1000px; }
-    }
-
     .scene {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255,255,255,0.93);
       border-radius: 24px;
       padding: 40px;
       max-width: 520px;
       text-align: center;
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      animation: fadeIn 0.8s ease;
     }
 
-    .bear-img {
-      width: 150px;
-      animation: float 3s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-12px); }
+    @keyframes fadeIn {
+      from {opacity:0; transform: translateY(20px);}
+      to {opacity:1; transform: translateY(0);}
     }
 
     .dialog {
@@ -62,145 +43,111 @@
       background: #6fa8ff;
       border: none;
       border-radius: 30px;
-      padding: 14px 30px;
+      padding: 14px 26px;
       font-size: 16px;
       color: white;
       cursor: pointer;
-      margin-top: 10px;
+      margin: 8px;
     }
 
-    .game {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      justify-content: center;
-      margin-top: 20px;
+    .code {
+      font-size: 32px;
+      letter-spacing: 6px;
+      color: #6fa8ff;
+      font-weight: bold;
     }
 
-    .game img {
-      width: 80px;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    .game img:hover {
-      transform: scale(1.1);
+    input {
+      padding: 10px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      text-align: center;
+      width: 60%;
     }
   </style>
 </head>
 
 <body>
 
-<div class="background"></div>
-
 <div class="scene" id="scene">
-  <img src="assets/bear.png.jpg" class="bear-img">
-
   <div class="dialog">
-    مرحبًا صديقي <strong>YoBa</strong> 💛<br><br>
-    لم أرك منذ وقت طويل…<br><br>
-    هل أنت مستعد أن تذهب معي في نزهة<br>
-    بعيدًا عن قهوتك ومكتبك؟ ☕💼
+    مرحبًا YoBa 🤍<br>
+    هل أنت جاهز للنهاية؟
   </div>
-
-  <button onclick="nextStep()">أنا متحمس!</button>
+  <button onclick="next()">نعم</button>
 </div>
 
 <script>
 let step = 0;
 
-// 🧩 ترتيب اللغز
-// 🐝 🐝 🐻 ☀️ 🌸 🐻 🌸 🐻 🐻
-const sequence = ["bee","bee","bear","sun","flower","bear","flower","bear","bear"];
-let userInput = [];
+function next() {
+  const s = document.getElementById("scene");
 
-const images = {
-  bee: "assets/bee.png.jpg",
-  bear: "assets/bear.png.jpg",
-  flower: "assets/flower.png.jpg",
-  sun: "assets/sun.png.jpg"
-};
-
-function shuffle(array) {
-  return array.sort(() => Math.random() - 0.5);
-}
-
-function nextStep() {
-  const scene = document.getElementById("scene");
-
+  // 🎃 pumpkin
   if (step === 0) {
-    scene.innerHTML = `
-      <img src="assets/bear.png.jpg" class="bear-img">
+    s.innerHTML = `
       <div class="dialog">
-        أمسك بيدي يا YoBa 🤍<br><br>
-        الغابة تنتظرنا 🌿
+        هل تتذكر اللقب الذي أطلقته علي؟ 🎃
       </div>
-      <button onclick="nextStep()">أنا معك</button>
+      <input id="pumpkin">
+      <br><br>
+      <button onclick="checkPumpkin()">تحقق</button>
     `;
   }
 
-  // 🧩 مرحلة اللغز
+  // 🐦 زقزوق ومرزوقة
   else if (step === 1) {
-    userInput = [];
-    const shuffled = shuffle(["bee","bear","flower","sun"]);
-
-    scene.innerHTML = `
+    s.innerHTML = `
       <div class="dialog">
-        🧩 لغز صغير:<br><br>
-        🐝 🐝 🐻 ☀️ 🌸 🐻 🌸 🐻 🐻<br><br>
-        اضغط الصور بنفس الترتيب
+        هل تتذكر زقزوق ومرزوقة؟ 🐦🌸
       </div>
-      <div class="game" id="game"></div>
-    `;
-
-    const gameDiv = document.getElementById("game");
-    shuffled.forEach(type => {
-      const img = document.createElement("img");
-      img.src = images[type];
-      img.onclick = () => checkOrder(type);
-      gameDiv.appendChild(img);
-    });
-  }
-
-  else if (step === 2) {
-    scene.innerHTML = `
-      <img src="assets/betterfly.png.jpg" style="width:120px">
-      <div class="dialog">
-        🦋 فراشة تهمس:<br>
-        كل شيء سيكون بخير
-      </div>
-      <button onclick="nextStep()">أبتسم</button>
-    `;
-  }
-
-  else {
-    scene.innerHTML = `
-      <img src="assets/happy.png.jpg" style="width:150px">
-      <div class="dialog">
-        🎉 مفاجأة 🎉<br><br>
-        YoBa…<br>
-        عيد ميلاد سعيد 💛<br><br>
-        أنت محبوب أكثر مما تظن
-      </div>
+      <button onclick="yesMemory()">نعم</button>
+      <button onclick="noMemory()">لا</button>
     `;
   }
 
   step++;
 }
 
-function checkOrder(type) {
-  userInput.push(type);
-  const i = userInput.length - 1;
-
-  if (userInput[i] !== sequence[i]) {
-    alert("جرب مرة أخرى بلطف 🌸");
-    userInput = [];
-    return;
+function checkPumpkin() {
+  const v = document.getElementById("pumpkin").value.trim().toLowerCase();
+  if (v === "pumpkin") {
+    next();
+  } else {
+    alert("قريب جدًا 🎃");
   }
+}
 
-  if (userInput.length === sequence.length) {
-    nextStep();
-  }
+function yesMemory() {
+  finalMessage();
+}
+
+function noMemory() {
+  const s = document.getElementById("scene");
+  s.innerHTML = `
+    <div class="dialog">
+      حسنًا… 🌙<br><br>
+      هل تتذكر الملك خوصيوص 👑<br>
+      والأميرة ميرنا 👸<br>
+      من قصر الخوسيبانا؟
+    </div>
+    <button onclick="finalMessage()">نعم بالطبع أتذكر الآن ✨</button>
+  `;
+}
+
+function finalMessage() {
+  const s = document.getElementById("scene");
+  s.innerHTML = `
+    <div class="dialog">
+      <!-- ✨ اكتبي رسالتك هنا ✨ -->
+      YoBa…<br><br>
+      هذه الرحلة ليست لعبة،<br>
+      بل دليل صغير على أنك<br>
+      لست وحدك أبدًا 🤍<br><br>
+      عيد ميلاد سعيد 🎉
+    </div>
+  `;
 }
 </script>
 
