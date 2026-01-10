@@ -64,20 +64,6 @@
       color: #3a4a6b;
     }
 
-    .code {
-      font-size: 32px;
-      letter-spacing: 6px;
-      color: #6fa8ff;
-      margin-top: 20px;
-      font-weight: bold;
-    }
-
-    .hint {
-      font-size: 14px;
-      color: #777;
-      margin-top: 15px;
-    }
-
     button {
       background: #6fa8ff;
       border: none;
@@ -143,6 +129,7 @@ function shuffle(array) {
 function nextStep() {
   const scene = document.getElementById("scene");
 
+  // البداية
   if (step === 0) {
     scene.innerHTML = `
       <img src="assets/bear.png.jpg" class="main-img">
@@ -221,24 +208,18 @@ function nextStep() {
       <div class="dialog">
         أنا أستمتع بهذه الجولة معك 🤍
       </div>
-      <button onclick="nextStep()">أكمل</button>
+      <button onclick="nextStep()">لنلعب!</button>
     `;
   }
 
-  // 🔐 الرمز السري
-  else if (step === 6) {
+  // 🎮 لعبة ثانية (بداية)
+  else {
     scene.innerHTML = `
       <div class="dialog">
-        🔐 أكمل الرمز السري
-      </div>
-      <div class="code" id="secretCode">20</div>
-      <div class="hint">
-        تلميح:<br>
-        اليوم الذي التقيتك فيه<br>
-        عند منزل خالتي
+        🎮 لعبة أخرى قادمة…<br><br>
+        لكن هذا سر صغير الآن ✨
       </div>
     `;
-    typeCode("20122024");
   }
 
   step++;
@@ -257,16 +238,6 @@ function checkOrder(type) {
   if (userInput.length === sequence.length) {
     nextStep();
   }
-}
-
-function typeCode(fullCode) {
-  const el = document.getElementById("secretCode");
-  let i = 2;
-  const interval = setInterval(() => {
-    el.textContent = fullCode.slice(0, i);
-    i++;
-    if (i > fullCode.length) clearInterval(interval);
-  }, 400);
 }
 </script>
 
