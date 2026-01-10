@@ -1,155 +1,197 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8" />
-  <title>نزهة مع YoBa 🧸</title>
+<meta charset="UTF-8" />
+<title>نزهة مع YoBa 🧸</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Tahoma, sans-serif;
-      direction: rtl;
-      background-color: #eaf2ff;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .scene {
-      background: rgba(255,255,255,0.93);
-      border-radius: 24px;
-      padding: 40px;
-      max-width: 520px;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      animation: fadeIn 0.8s ease;
-    }
-
-    @keyframes fadeIn {
-      from {opacity:0; transform: translateY(20px);}
-      to {opacity:1; transform: translateY(0);}
-    }
-
-    .dialog {
-      font-size: 18px;
-      line-height: 1.9;
-      margin: 25px 0;
-      color: #3a4a6b;
-    }
-
-    button {
-      background: #6fa8ff;
-      border: none;
-      border-radius: 30px;
-      padding: 14px 26px;
-      font-size: 16px;
-      color: white;
-      cursor: pointer;
-      margin: 8px;
-    }
-
-    .code {
-      font-size: 32px;
-      letter-spacing: 6px;
-      color: #6fa8ff;
-      font-weight: bold;
-    }
-
-    input {
-      padding: 10px;
-      border-radius: 12px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-      text-align: center;
-      width: 60%;
-    }
-  </style>
+<style>
+body{
+margin:0;
+font-family:Tahoma,sans-serif;
+direction:rtl;
+background:#eaf2ff;
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden;
+}
+.background{
+position:fixed;
+inset:0;
+background:url("assets/flowers.png.jpg");
+background-size:300px;
+opacity:.2;
+animation:moveBg 40s linear infinite;
+z-index:-1;
+}
+@keyframes moveBg{
+from{background-position:0 0}
+to{background-position:1000px 1000px}
+}
+.scene{
+background:rgba(255,255,255,.92);
+border-radius:24px;
+padding:40px;
+max-width:520px;
+text-align:center;
+box-shadow:0 10px 30px rgba(0,0,0,.1);
+animation:fadeIn 1s ease;
+}
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1;transform:translateY(0)}
+}
+.main-img{
+width:150px;
+animation:float 3s ease-in-out infinite;
+}
+@keyframes float{
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-12px)}
+}
+.dialog{
+font-size:18px;
+line-height:1.9;
+margin:25px 0;
+color:#3a4a6b;
+}
+button,input{
+background:#6fa8ff;
+border:none;
+border-radius:30px;
+padding:12px 26px;
+font-size:16px;
+color:white;
+cursor:pointer;
+margin:8px;
+}
+input{
+color:#333;
+background:#eef4ff;
+text-align:center;
+}
+</style>
 </head>
 
 <body>
+<div class="background"></div>
 
 <div class="scene" id="scene">
-  <div class="dialog">
-    مرحبًا YoBa 🤍<br>
-    هل أنت جاهز للنهاية؟
-  </div>
-  <button onclick="next()">نعم</button>
+<img src="assets/bear.png.jpg" class="main-img">
+<div class="dialog">
+مرحبًا صديقي <b>YoBa</b> 💛<br><br>
+هل أنت مستعد أن تمشي معي قليلًا؟
+</div>
+<button onclick="nextStep()">أنا متحمس!</button>
 </div>
 
 <script>
-let step = 0;
+let step=0;
+const sequence=["bee","bee","bear","sun","flower","bear","flower","bear","bear"];
+let userInput=[];
 
-function next() {
-  const s = document.getElementById("scene");
+function nextStep(){
+const s=document.getElementById("scene");
 
-  // 🎃 pumpkin
-  if (step === 0) {
-    s.innerHTML = `
-      <div class="dialog">
-        هل تتذكر اللقب الذي أطلقته علي؟ 🎃
-      </div>
-      <input id="pumpkin">
-      <br><br>
-      <button onclick="checkPumpkin()">تحقق</button>
-    `;
-  }
-
-  // 🐦 زقزوق ومرزوقة
-  else if (step === 1) {
-    s.innerHTML = `
-      <div class="dialog">
-        هل تتذكر زقزوق ومرزوقة؟ 🐦🌸
-      </div>
-      <button onclick="yesMemory()">نعم</button>
-      <button onclick="noMemory()">لا</button>
-    `;
-  }
-
-  step++;
+if(step===0){
+s.innerHTML=`
+<img src="assets/bear.png.jpg" class="main-img">
+<div class="dialog">أمسك بيدي 🤍</div>
+<button onclick="nextStep()">أنا معك</button>`;
 }
 
-function checkPumpkin() {
-  const v = document.getElementById("pumpkin").value.trim().toLowerCase();
-  if (v === "pumpkin") {
-    next();
-  } else {
-    alert("قريب جدًا 🎃");
-  }
+else if(step===1){
+userInput=[];
+s.innerHTML=`
+<div class="dialog">🧩 اضغط الصور بالترتيب</div>
+<button onclick="correctPuzzle()">تم</button>`;
 }
 
-function yesMemory() {
-  finalMessage();
+else if(step===2){
+s.innerHTML=`
+<img src="assets/butterfly.png.jpg" class="main-img">
+<div class="dialog">كل شيء سيكون بخير</div>
+<button onclick="nextStep()">التالي</button>`;
 }
 
-function noMemory() {
-  const s = document.getElementById("scene");
-  s.innerHTML = `
-    <div class="dialog">
-      حسنًا… 🌙<br><br>
-      هل تتذكر الملك خوصيوص 👑<br>
-      والأميرة ميرنا 👸<br>
-      من قصر الخوسيبانا؟
-    </div>
-    <button onclick="finalMessage()">نعم بالطبع أتذكر الآن ✨</button>
-  `;
+else if(step===3){
+s.innerHTML=`
+<img src="assets/bee.png.jpg" class="main-img">
+<div class="dialog">أريدك دائمًا أن تتذوق عسلًا يا الجميل 🍯</div>
+<button onclick="nextStep()">التالي</button>`;
 }
 
-function finalMessage() {
-  const s = document.getElementById("scene");
-  s.innerHTML = `
-    <div class="dialog">
-      <!-- ✨ اكتبي رسالتك هنا ✨ -->
-      YoBa…<br><br>
-      هذه الرحلة ليست لعبة،<br>
-      بل دليل صغير على أنك<br>
-      لست وحدك أبدًا 🤍<br><br>
-      عيد ميلاد سعيد 🎉
-    </div>
-  `;
+else if(step===4){
+s.innerHTML=`
+<img src="assets/sun.png.jpg" class="main-img">
+<div class="dialog">سأحرص على جعلك دائمًا دافئًا بأشعتي ☀️</div>
+<button onclick="nextStep()">التالي</button>`;
+}
+
+else if(step===5){
+s.innerHTML=`
+<img src="assets/bear.png.jpg" class="main-img">
+<div class="dialog">أنا أستمتع بهذه الجولة معك 🤍</div>
+<button onclick="nextStep()">التالي</button>`;
+}
+
+else if(step===6){
+s.innerHTML=`
+<div class="dialog">
+أكمل الرمز السري 🔐<br><br>
+20______<br>
+<small>تلميح: اليوم الذي التقيتك فيه عند منزل خالتي</small>
+</div>
+<input id="code">
+<button onclick="checkCode()">تحقق</button>`;
+}
+
+else if(step===7){
+s.innerHTML=`
+<div class="dialog">هل تتذكر اللقب الذي أطلقته علي 🎃</div>
+<input id="nick">
+<button onclick="checkNick()">تحقق</button>`;
+}
+
+else if(step===8){
+s.innerHTML=`
+<div class="dialog">هل تتذكر زقزوق و مرزوقة؟</div>
+<button onclick="rememberYes()">نعم</button>
+<button onclick="rememberNo()">لا</button>`;
+}
+
+step++;
+}
+
+function correctPuzzle(){ step++; nextStep(); }
+
+function checkCode(){
+if(document.getElementById("code").value==="20122024"){nextStep();}
+else alert("ليس بعد 🌸");
+}
+
+function checkNick(){
+if(document.getElementById("nick").value.toLowerCase()==="pumpkin"){nextStep();}
+else alert("حاول مرة أخرى 🎃");
+}
+
+function rememberYes(){
+document.getElementById("scene").innerHTML=`
+<div class="dialog">
+💌 رسالتك الأخيرة هنا<br>
+(اكتبي ما تشائين)
+</div>`;
+}
+
+function rememberNo(){
+document.getElementById("scene").innerHTML=`
+<div class="dialog">
+هل تتذكر الملك خوصيوص 👑<br>
+والأميرة ميرنا من قصر الخوسيبانا؟
+</div>
+<button onclick="rememberYes()">نعم بالطبع أتذكر الآن</button>`;
 }
 </script>
-
 </body>
 </html>
