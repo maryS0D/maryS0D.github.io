@@ -93,7 +93,6 @@
       transform: scale(1.1);
     }
 
-    /* الرمز السري */
     .code-box {
       display: flex;
       justify-content: center;
@@ -111,7 +110,7 @@
     }
 
     .code-input {
-      width: 120px;
+      width: 160px;
       font-size: 20px;
       padding: 10px;
       text-align: center;
@@ -145,6 +144,7 @@
 
 <script>
 let step = 0;
+const nicknameAnswer = "pumpkin";
 
 const sequence = ["bee","bee","bear","sun","flower","bear","flower","bear","bear"];
 let userInput = [];
@@ -231,13 +231,27 @@ function nextStep() {
 
       <div class="code-box">
         <div class="code-prefix">20</div>
-        <input class="code-input" maxlength="6" placeholder="------"
+        <input class="code-input" maxlength="6"
+          placeholder="------"
           oninput="checkCode(this.value)">
       </div>
 
       <div class="hint">
         إنه اليوم الذي التقيتك فيه عند منزل خالتي
       </div>
+    `;
+  }
+
+  /* 🎃 سؤال اللقب */
+  else if (step === 7) {
+    scene.innerHTML = `
+      <div class="dialog">
+        هل تتذكر اللقب الذي أطلقته علي؟ 🎃
+      </div>
+      <input class="code-input"
+        style="width:200px"
+        placeholder="اكتب اللقب هنا..."
+        oninput="checkNickname(this.value)">
     `;
   }
 
@@ -256,6 +270,12 @@ function checkOrder(type) {
 
 function checkCode(value) {
   if ("20" + value === "20122024") {
+    nextStep();
+  }
+}
+
+function checkNickname(value) {
+  if (value.trim().toLowerCase() === nicknameAnswer) {
     nextStep();
   }
 }
