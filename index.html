@@ -36,7 +36,7 @@
       background: rgba(255, 255, 255, 0.9);
       border-radius: 24px;
       padding: 40px;
-      max-width: 500px;
+      max-width: 520px;
       text-align: center;
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
@@ -66,6 +66,25 @@
       font-size: 16px;
       color: white;
       cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .game {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .game img {
+      width: 80px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .game img:hover {
+      transform: scale(1.1);
     }
   </style>
 </head>
@@ -90,6 +109,21 @@
 <script>
 let step = 0;
 
+// ترتيب اللغز
+const sequence = ["bee","bee","bear","cloud","flower","bear","flower","bear","bear"];
+let userInput = [];
+
+const images = {
+  bee: "assets/bee.png.jpg",
+  bear: "assets/bear.png.jpg",
+  flower: "assets/flower.png.jpg",
+  cloud: "assets/cloud.png.jpg"
+};
+
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
 function nextStep() {
   const scene = document.getElementById("scene");
 
@@ -104,15 +138,27 @@ function nextStep() {
     `;
   }
 
+  // 🧩 مرحلة اللغز
   else if (step === 1) {
+    userInput = [];
+    const shuffled = shuffle(["bee","bear","flower","cloud"]);
+
     scene.innerHTML = `
-      <img src="assets/flower.png.jpg" style="width:120px">
       <div class="dialog">
-        🌸 زهرة تقول:<br>
-        أحب أن أكون بقربك
+        🧩 لغز صغير:<br><br>
+        🐝 🐝 🐻 ☁️ 🌸 🐻 🌸 🐻 🐻<br><br>
+        اضغط الصور بنفس الترتيب
       </div>
-      <button onclick="nextStep()">هذا جميل</button>
+      <div class="game" id="game"></div>
     `;
+
+    const gameDiv = document.getElementById("game");
+    shuffled.forEach(type => {
+      const img = document.createElement("img");
+      img.src = images[type];
+      img.onclick = () => checkOrder(type);
+      gameDiv.appendChild(img);
+    });
   }
 
   else if (step === 2) {
@@ -139,6 +185,21 @@ function nextStep() {
   }
 
   step++;
+}
+
+function checkOrder(type) {
+  userInput.push(type);
+  const i = userInput.length - 1;
+
+  if (userInput[i] !== sequence[i]) {
+    alert("جرب مرة أخرى بلطف 🌸");
+    userInput = [];
+    return;
+  }
+
+  if (userInput.length === sequence.length) {
+    nextStep();
+  }
 }
 </script>
 
