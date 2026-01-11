@@ -1,191 +1,195 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8" />
-  <title>نزهة مع YoBa 🧸</title>
+<meta charset="UTF-8" />
+<title>نزهة مع YoBa 🧸</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Tahoma, sans-serif;
-      direction: rtl;
-      background-color: #eaf2ff;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
+<style>
+body{
+  margin:0;
+  font-family:Tahoma,sans-serif;
+  direction:rtl;
+  background:#eaf2ff;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
 
-    .background {
-      position: fixed;
-      inset: 0;
-      background-image: url("assets/flowers.png.jpg");
-      background-size: 300px;
-      opacity: 0.2;
-      animation: moveBg 40s linear infinite;
-      z-index: -1;
-    }
+/* خلفية الشرشف الأزرق */
+.background{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(135deg,#cfe0ff,#eaf2ff,#cfe0ff);
+  background-size:400% 400%;
+  animation:moveBg 20s ease infinite;
+  z-index:-1;
+}
 
-    @keyframes moveBg {
-      from { background-position: 0 0; }
-      to { background-position: 1000px 1000px; }
-    }
+@keyframes moveBg{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
 
-    .scene {
-      background: rgba(255, 255, 255, 0.92);
-      border-radius: 24px;
-      padding: 40px;
-      max-width: 520px;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      animation: fadeIn 0.8s ease;
-    }
+.scene{
+  background:rgba(255,255,255,.94);
+  border-radius:24px;
+  padding:40px;
+  max-width:520px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,.15);
+  animation:fadeIn 1s ease;
+}
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
 
-    .main-img {
-      width: 150px;
-      animation: float 3s ease-in-out infinite;
-    }
+.main-img{
+  width:150px;
+  animation:float 3s ease-in-out infinite;
+}
 
-    @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-12px); }
-    }
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
+}
 
-    .dialog {
-      font-size: 18px;
-      line-height: 1.9;
-      margin: 25px 0;
-      color: #3a4a6b;
-    }
+.dialog{
+  font-size:18px;
+  line-height:1.9;
+  margin:25px 0;
+  color:#3a4a6b;
+}
 
-    button {
-      background: #6fa8ff;
-      border: none;
-      border-radius: 30px;
-      padding: 14px 30px;
-      font-size: 16px;
-      color: white;
-      cursor: pointer;
-      margin-top: 10px;
-    }
+button{
+  background:#6fa8ff;
+  border:none;
+  border-radius:30px;
+  padding:14px 30px;
+  font-size:16px;
+  color:white;
+  cursor:pointer;
+  margin-top:10px;
+}
 
-    .game {
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 20px;
-    }
+/* لعبة الصور */
+.game{
+  display:flex;
+  gap:15px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
 
-    .game img {
-      width: 80px;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
+.game img{
+  width:80px;
+  cursor:pointer;
+  transition:transform .2s;
+}
 
-    .game img:hover {
-      transform: scale(1.1);
-    }
-  </style>
+.game img:hover{
+  transform:scale(1.1);
+}
+
+.hint{
+  margin-top:12px;
+  font-size:14px;
+  color:#6b7aa6;
+}
+</style>
 </head>
 
 <body>
-
 <div class="background"></div>
 
 <div class="scene" id="scene">
   <img src="assets/bear.png.jpg" class="main-img">
   <div class="dialog">
     مرحبًا صديقي <strong>YoBa</strong> 🧸<br><br>
-    لقد مرّ وقت طويل…<br><br>
-    هل أنت مستعد أن آخذك في نزهة<br>
-    بعيدًا عن قهوتك و مكتبك؟ ☕💼
+    لقد مضى وقت طويل…<br><br>
+    هل تريد أن آخذك في نزهة<br>
+    بعيدًا عن مكتبك 💼 و قهوتك ☕؟
   </div>
-  <button onclick="nextStep()">أنا متحمس!</button>
+  <button onclick="nextStep()">أنا متحمس</button>
 </div>
 
 <script>
-let step = 0;
+let step=0;
 
-// ترتيب اللغز
-const sequence = ["bee","bee","bear","sun","flower","bear","flower","bear","bear"];
-let userInput = [];
+const sequence=["bee","bee","bear","sun","flower","bear","flower","bear","bear"];
+let userInput=[];
 
-const images = {
-  bee: "assets/bee.png.jpg",
-  bear: "assets/bear.png.jpg",
-  flower: "assets/flower.png.jpg",
-  sun: "assets/sun.png.jpg"
+const images={
+  bee:"assets/bee.png.jpg",
+  bear:"assets/bear.png.jpg",
+  flower:"assets/flower.png.jpg",
+  sun:"assets/sun.png.jpg"
 };
 
-function shuffle(array) {
-  return array.sort(() => Math.random() - 0.5);
+function shuffle(arr){
+  return arr.sort(()=>Math.random()-.5);
 }
 
-function nextStep() {
-  const scene = document.getElementById("scene");
+function nextStep(){
+  const scene=document.getElementById("scene");
 
-  if (step === 0) {
-    scene.innerHTML = `
+  if(step===0){
+    scene.innerHTML=`
       <img src="assets/bear.png.jpg" class="main-img">
-      <div class="dialog">أمسك بيدي 🤍</div>
-      <button onclick="nextStep()">أنا معك</button>
+      <div class="dialog">أنا سعيد بوجودك معي 🤍</div>
+      <button onclick="nextStep()">تابع</button>
     `;
   }
 
-  else if (step === 1) {
-    userInput = [];
-    const shuffled = shuffle(["bee","bear","flower","sun"]);
-
-    scene.innerHTML = `
+  else if(step===1){
+    userInput=[];
+    const shuffled=shuffle(["bee","bear","flower","sun"]);
+    scene.innerHTML=`
       <div class="dialog">
-        🧩 لغز صغير:<br><br>
-        🐝 🐝 🐻 ☀️ 🌸 🐻 🌸 🐻 🐻<br><br>
-        اضغط الصور بنفس الترتيب
+        ➜ 🐝 🐝 🐻 ☀️ 🌸 🐻 🌸 🐻 🐻
       </div>
       <div class="game" id="game"></div>
+      <div class="hint">ابدأ من جهة السهم ✨</div>
     `;
-
-    const gameDiv = document.getElementById("game");
-    shuffled.forEach(type => {
-      const img = document.createElement("img");
-      img.src = images[type];
-      img.onclick = () => checkOrder(type);
-      gameDiv.appendChild(img);
+    const game=document.getElementById("game");
+    shuffled.forEach(t=>{
+      const img=document.createElement("img");
+      img.src=images[t];
+      img.onclick=()=>checkOrder(t);
+      game.appendChild(img);
     });
-
     step++;
     return;
   }
 
-  else if (step === 2) {
-    scene.innerHTML = `
-      <img src="assets/betterfly.png.jpg" class="main-img">
-      <div class="dialog">كل شيء سيكون بخير</div>
-      <button onclick="nextStep()">التالي</button>
+  else if(step===2){
+    scene.innerHTML=`
+      <img src="assets/bear.png.jpg" class="main-img">
+      <div class="dialog">
+        أحسنت! ✨🧠<br>
+        أنت أذكى مما تعتقد 🌟🤍
+      </div>
+      <button onclick="nextStep()">تابع</button>
     `;
   }
 
   step++;
 }
 
-function checkOrder(type) {
+function checkOrder(type){
   userInput.push(type);
-  const index = userInput.length - 1;
 
-  if (userInput[index] !== sequence[index]) {
-    alert("جرب مرة أخرى بهدوء 🌸");
-    userInput = [];
+  if(userInput[userInput.length-1]!==sequence[userInput.length-1]){
+    alert("لا بأس 🌸 جرّب مرة أخرى بهدوء");
+    userInput=[];
     return;
   }
 
-  if (userInput.length === sequence.length) {
+  if(userInput.length===sequence.length){
     nextStep();
   }
 }
