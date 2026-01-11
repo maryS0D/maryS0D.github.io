@@ -92,6 +92,15 @@ button{
 .game img:hover{
   transform:scale(1.1);
 }
+
+input{
+  padding:12px;
+  font-size:18px;
+  border-radius:12px;
+  border:1px solid #cbd5f5;
+  text-align:center;
+  width:180px;
+}
 </style>
 </head>
 
@@ -166,7 +175,7 @@ function nextStep(){
         أحسنت! ✨🧠<br>
         أنت أذكى مما تعتقد 🌟🤍
       </div>
-      <button onclick="nextStep()">تابع</button>
+      <button onclick="dateIntro()">تابع</button>
     `;
   }
 
@@ -184,6 +193,43 @@ function checkOrder(type){
 
   if(userInput.length===sequence.length){
     nextStep();
+  }
+}
+
+/* 🧠 مرحلة التاريخ */
+
+function dateIntro(){
+  const scene=document.getElementById("scene");
+  scene.innerHTML=`
+    <img src="assets/bear.png.jpg" class="main-img">
+    <div class="dialog">
+      قد تتذكر الأحداث…<br>
+      لكن هل أنا وحدي من سيتذكر التواريخ؟ ⏳🤍
+    </div>
+    <button onclick="datePuzzle()">قد أتذكر ✨🧠</button>
+  `;
+}
+
+function datePuzzle(){
+  const scene=document.getElementById("scene");
+  scene.innerHTML=`
+    <div class="dialog">
+      🧩 لغز صغير<br><br>
+      ما هو التاريخ الذي التقينا فيه في منزل خالتي؟ 🏠🌸<br><br>
+      <strong>20 • • • • • •</strong>
+    </div>
+    <input type="text" id="dateInput" maxlength="8" inputmode="numeric" placeholder="________">
+    <br><br>
+    <button onclick="checkDate()">تحقق ✨</button>
+  `;
+}
+
+function checkDate(){
+  const value=document.getElementById("dateInput").value;
+  if(value==="20122024"){
+    alert("🤍 لقد تذكّرت… وهذا يكفي");
+  }else{
+    alert("تمهّل 🌸 خذ نفسًا وجرب مرة أخرى");
   }
 }
 </script>
