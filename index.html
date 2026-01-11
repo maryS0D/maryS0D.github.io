@@ -74,7 +74,6 @@ button{
   margin-top:10px;
 }
 
-/* لعبة الصور */
 .game{
   display:flex;
   gap:15px;
@@ -227,9 +226,44 @@ function datePuzzle(){
 function checkDate(){
   const value=document.getElementById("dateInput").value;
   if(value==="20122024"){
-    alert("🤍 لقد تذكّرت… وهذا يكفي");
+    moreMemory();   // ⬅️ الانتقال للمرحلة الجديدة
   }else{
     alert("تمهّل 🌸 خذ نفسًا وجرب مرة أخرى");
+  }
+}
+
+/* 🎃 مرحلة اللقب */
+
+function moreMemory(){
+  const scene=document.getElementById("scene");
+  scene.innerHTML=`
+    <img src="assets/bear.png.jpg" class="main-img">
+    <div class="dialog">
+      اممم… 🤔<br>
+      هل تتذكر أكثر من ذلك؟
+    </div>
+    <button onclick="nicknameQuestion()">لنرَ 👀</button>
+  `;
+}
+
+function nicknameQuestion(){
+  const scene=document.getElementById("scene");
+  scene.innerHTML=`
+    <div class="dialog">
+      🎃 هل تتذكر الاسم الذي أطلقته علي؟
+    </div>
+    <input type="text" id="nickInput" placeholder="اكتب هنا">
+    <br><br>
+    <button onclick="checkNickname()">تحقق ✨</button>
+  `;
+}
+
+function checkNickname(){
+  const value=document.getElementById("nickInput").value.toLowerCase();
+  if(value==="pumpkin"){
+    alert("🎃🤍 نعم… هذا هو بالضبط");
+  }else{
+    alert("قريب… جرّب مرة أخرى 🌸");
   }
 }
 </script>
