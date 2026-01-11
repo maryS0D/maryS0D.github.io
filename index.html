@@ -35,7 +35,7 @@ body{
   background:rgba(255,255,255,.95);
   border-radius:24px;
   padding:40px;
-  max-width:520px;
+  max-width:560px;
   text-align:center;
   box-shadow:0 10px 30px rgba(0,0,0,.15);
   animation:fadeIn 1s ease;
@@ -58,7 +58,7 @@ body{
 
 .dialog{
   font-size:18px;
-  line-height:1.9;
+  line-height:2;
   margin:25px 0;
   color:#3a4a6b;
 }
@@ -99,6 +99,42 @@ input{
   border:1px solid #cbd5f5;
   text-align:center;
   width:180px;
+}
+
+/* 🌸 الصفحة الختامية */
+.final-wrapper{
+  position:relative;
+  width:360px;
+  height:360px;
+  margin:0 auto 25px;
+}
+
+.orbit{
+  position:absolute;
+  inset:0;
+  animation:spin 18s linear infinite;
+}
+
+.orbit span{
+  position:absolute;
+  font-size:28px;
+}
+
+.orbit span:nth-child(1){top:0;left:50%}
+.orbit span:nth-child(2){top:25%;right:0}
+.orbit span:nth-child(3){bottom:0;left:50%}
+.orbit span:nth-child(4){top:25%;left:0}
+.orbit span:nth-child(5){top:50%;right:10%}
+
+@keyframes spin{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+
+.final-text{
+  font-size:17px;
+  line-height:2;
+  color:#3a4a6b;
 }
 </style>
 </head>
@@ -183,22 +219,18 @@ function nextStep(){
 
 function checkOrder(type){
   userInput.push(type);
-
   if(userInput[userInput.length-1]!==sequence[userInput.length-1]){
     alert("لا بأس 🌸 جرّب مرة أخرى بهدوء");
     userInput=[];
     return;
   }
-
   if(userInput.length===sequence.length){
     nextStep();
   }
 }
 
-/* 🧠 مرحلة التاريخ */
-
+/* 🧠 التاريخ */
 function dateIntro(){
-  const scene=document.getElementById("scene");
   scene.innerHTML=`
     <img src="assets/bear.png.jpg" class="main-img">
     <div class="dialog">
@@ -210,32 +242,27 @@ function dateIntro(){
 }
 
 function datePuzzle(){
-  const scene=document.getElementById("scene");
   scene.innerHTML=`
     <div class="dialog">
-      🧩 لغز صغير<br><br>
       ما هو التاريخ الذي التقينا فيه في منزل خالتي؟ 🏠🌸<br><br>
       <strong>20 • • • • • •</strong>
     </div>
-    <input type="text" id="dateInput" maxlength="8" inputmode="numeric" placeholder="________">
+    <input id="dateInput" maxlength="8">
     <br><br>
     <button onclick="checkDate()">تحقق ✨</button>
   `;
 }
 
 function checkDate(){
-  const value=document.getElementById("dateInput").value;
-  if(value==="20122024"){
-    moreMemory();   // ⬅️ الانتقال للمرحلة الجديدة
+  if(dateInput.value==="20122024"){
+    moreMemory();
   }else{
-    alert("تمهّل 🌸 خذ نفسًا وجرب مرة أخرى");
+    alert("تمهّل 🌸");
   }
 }
 
-/* 🎃 مرحلة اللقب */
-
+/* 🎃 اللقب */
 function moreMemory(){
-  const scene=document.getElementById("scene");
   scene.innerHTML=`
     <img src="assets/bear.png.jpg" class="main-img">
     <div class="dialog">
@@ -247,24 +274,46 @@ function moreMemory(){
 }
 
 function nicknameQuestion(){
-  const scene=document.getElementById("scene");
   scene.innerHTML=`
     <div class="dialog">
       🎃 هل تتذكر الاسم الذي أطلقته علي؟
     </div>
-    <input type="text" id="nickInput" placeholder="اكتب هنا">
+    <input id="nickInput">
     <br><br>
     <button onclick="checkNickname()">تحقق ✨</button>
   `;
 }
 
 function checkNickname(){
-  const value=document.getElementById("nickInput").value.toLowerCase();
-  if(value==="pumpkin"){
-    alert("🎃🤍 نعم… هذا هو بالضبط");
+  if(nickInput.value.toLowerCase()==="pumpkin"){
+    finalScene();
   }else{
-    alert("قريب… جرّب مرة أخرى 🌸");
+    alert("قريب 🌸");
   }
+}
+
+/* 🌈 المشهد الختامي */
+function finalScene(){
+  scene.innerHTML=`
+    <div class="final-wrapper">
+      <div class="orbit">
+        <span>🦋</span>
+        <span>🐝</span>
+        <span>🌸</span>
+        <span>☀️</span>
+        <span>🧸</span>
+      </div>
+    </div>
+
+    <div class="final-text">
+      🌷 لقد قمتَ بمجهودٍ جيدٍ إلى الآن 🌷<br><br>
+      نتمنى لك عيد ميلاد سعيد 🎂✨<br><br>
+      وتذكّر دائمًا أن الجانب المشرق لأي شيء<br>
+      قد يبدو سيئًا… هو موجود بالفعل 🌈<br>
+      حتى لو لم تره أنت الآن 🤍<br><br>
+      نحن نحبك كثيرًا 💖🌸🦋☀️
+    </div>
+  `;
 }
 </script>
 
