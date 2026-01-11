@@ -9,7 +9,6 @@ body{
   margin:0;
   font-family:Tahoma,sans-serif;
   direction:rtl;
-  background:#eaf2ff;
   min-height:100vh;
   display:flex;
   justify-content:center;
@@ -17,24 +16,23 @@ body{
   overflow:hidden;
 }
 
-/* خلفية الشرشف الأزرق */
+/* 🟦 خلفية شرشف أزرق */
 .background{
   position:fixed;
   inset:0;
-  background:linear-gradient(135deg,#cfe0ff,#eaf2ff,#cfe0ff);
-  background-size:400% 400%;
-  animation:moveBg 20s ease infinite;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      #dbe8ff,
+      #dbe8ff 10px,
+      #eaf2ff 10px,
+      #eaf2ff 20px
+    );
   z-index:-1;
 }
 
-@keyframes moveBg{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
-
 .scene{
-  background:rgba(255,255,255,.94);
+  background:rgba(255,255,255,.95);
   border-radius:24px;
   padding:40px;
   max-width:520px;
@@ -94,12 +92,6 @@ button{
 .game img:hover{
   transform:scale(1.1);
 }
-
-.hint{
-  margin-top:12px;
-  font-size:14px;
-  color:#6b7aa6;
-}
 </style>
 </head>
 
@@ -150,10 +142,11 @@ function nextStep(){
     const shuffled=shuffle(["bee","bear","flower","sun"]);
     scene.innerHTML=`
       <div class="dialog">
-        ➜ 🐝 🐝 🐻 ☀️ 🌸 🐻 🌸 🐻 🐻
+        🧩 لغز صغير<br>
+        انظر لهذه الصورة:<br><br>
+        🐝 ← 🐝 🐻 ☀️ 🌸 🐻 🌸 🐻 🐻
       </div>
       <div class="game" id="game"></div>
-      <div class="hint">ابدأ من جهة السهم ✨</div>
     `;
     const game=document.getElementById("game");
     shuffled.forEach(t=>{
